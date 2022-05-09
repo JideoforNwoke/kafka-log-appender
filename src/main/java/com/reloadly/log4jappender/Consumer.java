@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class Consumer {
 
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         Properties properties = new Properties();
         properties.put("bootstrap.servers", "localhost:9092");
         properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
@@ -24,9 +24,9 @@ public class Consumer {
         kafkaConsumer.subscribe(topics);
         try{
             while (true){
-                ConsumerRecords<String, String>  records = kafkaConsumer.poll(Duration.ofMinutes(10));
+                ConsumerRecords<String, String>  records = kafkaConsumer.poll(Duration.ofMinutes(20));
                 for (ConsumerRecord<String, String> message: records){
-                    System.out.println(String.format("Topic - %s, Partition - %d, Value: %s", message.topic(), message.partition(), message.value()));
+                    System.out.println(String.format("Processing logs on kafka Topic - %s, Partition - %d, Value: %s", message.topic(), message.partition(), message.value()));
                 }
             }
         }catch (Exception e){
